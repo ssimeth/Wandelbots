@@ -2,9 +2,7 @@
 
 # Usage
 
-git clone https://github.com/ssimeth/Wandelbots.git
-
-cd Wandelbots/
+git clone https://github.com/ssimeth/Wandelbots.git && cd Wandelbots/
 
 docker build -t ipc-monitor .
 
