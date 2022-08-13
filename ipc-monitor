@@ -1,0 +1,39 @@
+### Start webserver
+
+lighttpd -D -f /etc/lighttpd/lighttpd.conf &
+
+### Start Monitoring
+while :
+do
+
+# Get CPU Temp
+CPUTEMP=$(paste <(cat /sys/class/thermal/thermal_zone*/type) <(cat /sys/class/thermal/thermal_zone*/temp) | awk '{ print $2 }' | sed 's/\(.\)..$//')
+
+# Set color depending on temp
+if [ "$CPUTEMP" -le 70 ]; then
+  CPUCOL="green"
+fi
+if [ "$CPUTEMP" -ge 71 ] && [ "$CPUTEMP" -le 90 ]; then
+  CPUCOL="orange"
+fi
+if [ "$CPUTEMP" -ge 91 ]; then
+  CPUCOL="red"
+fi
+
+# Write index.html
+cat <<EOF > /var/www/localhost/htdocs/index.html
+<html>
+    <head>
+        <title>IPC Monitoring</title>
+	<meta http-equiv="refresh" content="1">
+    </head>
+    <body>
+        <p style="color:$CPUCOL;">
+            CPU Temp: $CPUTEMP &#8451
+        </p>
+    </body>
+</html>
+EOF
+
+sleep 1
+done
