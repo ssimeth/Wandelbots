@@ -1,8 +1,12 @@
-### Start webserver
+########################
+#### IPC-Monitor #######
+########################
+
+# Start webserver
 
 lighttpd -D -f /etc/lighttpd/lighttpd.conf &
 
-### Start Monitoring
+# Start Monitoring
 while :
 do
 
@@ -35,5 +39,6 @@ cat <<EOF > /var/www/localhost/htdocs/index.html
 </html>
 EOF
 
+# Repeat until stop
 sleep 1
 done
