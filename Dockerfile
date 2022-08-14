@@ -1,3 +1,7 @@
+#############################################
+### Dockerfile for Wandelbots ipc-monitor ###
+#############################################
+
 FROM alpine
 
 #ARG USER=wandelbots
@@ -6,20 +10,23 @@ FROM alpine
 # Add new user
 #RUN adduser -D $USER
 
-# Install minimal webserver
+# Install webserver
 RUN apk update \
     && apk add lighttpd \
     && rm -rf /var/cache/apk/*
 
-# Copy html template and ipc-monitor and fix permissions
-COPY ./ipc-monitor /var/www/localhost/htdocs
-RUN chmod +x /var/www/localhost/htdocs/ipc-monitor
+# Copy ipc-monitor 
+COPY ./ipc-monitor /ipc-monitor
 
-# Runtime
-ENTRYPOINT ["sh", "-c", "/var/www/localhost/htdocs/ipc-monitor"]
-
-EXPOSE 80
+# Fix permissions
+RUN chmod +x /ipc-monitor
 
 # set unprivileged user
 #USER $USER
 #WORKDIR $HOME
+
+# Runtime
+ENTRYPOINT ["sh", "-c", "/ipc-monitor"]
+
+# Expose webserver port
+EXPOSE 80
