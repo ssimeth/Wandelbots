@@ -14,15 +14,26 @@ do
 CPUTEMP=$(paste <(cat /sys/class/thermal/thermal_zone*/type) <(cat /sys/class/thermal/thermal_zone*/temp) | awk '{ print $2 }' | sed 's/\(.\)..$//')
 
 # Set color depending on temp
-if [ "$CPUTEMP" -le 68 ]; then
+if (($CPUTEMP <= 68)); then
   CPUCOL="green"
 fi
-if [ "$CPUTEMP" -ge 69 ] && [ "$CPUTEMP" -le 74 ]; then
+if (($CPUTEMP > 68 && $CPUTEMP <= 74)); then
   CPUCOL="orange"
 fi
-if [ "$CPUTEMP" -ge 75 ]; then
+if (($CPUTEMP > 74)); then
   CPUCOL="red"
 fi
+
+
+# if [ "$CPUTEMP" -le 68 ]; then
+#   CPUCOL="green"
+# fi
+# if [ "$CPUTEMP" -ge 69 ] && [ "$CPUTEMP" -le 74 ]; then
+#   CPUCOL="orange"
+# fi
+# if [ "$CPUTEMP" -ge 75 ]; then
+#   CPUCOL="red"
+# fi
 
 # Write index.html
 cat <<EOF > /var/www/localhost/htdocs/index.html
