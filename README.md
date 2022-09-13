@@ -2,7 +2,7 @@
 
 # Usage
 
-git clone https://github.com/ssimeth/Wandelbots.git && cd Wandelbots/
+docker run -ti --rm -v ${HOME}:/root -v $(pwd):/git alpine/git clone https://github.com/ssimeth/Wandelbots.git && cd Wandelbots/
 
 docker build -t ipc-monitor .
 
