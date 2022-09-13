@@ -32,6 +32,8 @@ cat <<EOF > /var/www/localhost/htdocs/index.html
 	<meta http-equiv="refresh" content="1">
     </head>
     <body>
+        <h1>IPC-Monitoring</h1>
+        <h2>CPU Temp<h2>
         <p style="color:$CPUCOL;">
             CPU Temp: $CPUTEMP &#8451
         </p>
